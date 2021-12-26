@@ -12,6 +12,8 @@ public class PlayerMovementController : MonoBehaviour
     float rotationSpeed = 100f;
 
     private CharacterController characterController;
+
+    private FieldOfView playerFieldOfView;
     
     private Vector3 movementDirection;
     
@@ -25,6 +27,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         // todo add field of view properties
         characterController = GetComponent<CharacterController>();
+        playerFieldOfView = GetComponent<FieldOfView>();
     }
 
     // Update is called once per frame
@@ -35,6 +38,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Move()
     {
+        isEnemyInSight = playerFieldOfView.IsTargetInSight;
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
@@ -42,7 +46,6 @@ public class PlayerMovementController : MonoBehaviour
 
         if (movementDirection.magnitude >= 0.1)
         {
-            // transform.Translate(movementDirection * movementSpeed * Time.deltaTime, Space.World);        // todo remove
             characterController.Move(movementDirection * movementSpeed * Time.deltaTime);
             Rotate();
         }
@@ -50,7 +53,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Rotate()
     {
-        if (!isEnemyInSight) return;
+        if (isEnemyInSight) return;
 
         Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(this.transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
