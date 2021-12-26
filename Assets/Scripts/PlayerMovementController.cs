@@ -14,6 +14,8 @@ public class PlayerMovementController : MonoBehaviour
     private CharacterController characterController;
 
     private FieldOfView playerFieldOfView;
+
+    private PlayerAnimationStateController playerAnimationStateController;
     
     private Vector3 movementDirection;
     
@@ -28,6 +30,7 @@ public class PlayerMovementController : MonoBehaviour
         // todo add field of view properties
         characterController = GetComponent<CharacterController>();
         playerFieldOfView = GetComponent<FieldOfView>();
+        playerAnimationStateController = GetComponent<PlayerAnimationStateController>();
     }
 
     // Update is called once per frame
@@ -47,7 +50,12 @@ public class PlayerMovementController : MonoBehaviour
         if (movementDirection.magnitude >= 0.1)
         {
             characterController.Move(movementDirection * movementSpeed * Time.deltaTime);
+            playerAnimationStateController.currentState = PlayerAnimationStateController.PlayerState.Walking;
             Rotate();
+        }
+        else
+        {
+            playerAnimationStateController.currentState = PlayerAnimationStateController.PlayerState.Idle;
         }
     }
 
