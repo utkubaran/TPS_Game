@@ -51,11 +51,13 @@ public class PlayerMovementController : MonoBehaviour
         {
             characterController.Move(movementDirection * movementSpeed * Time.deltaTime);
             playerAnimationStateController.currentState = PlayerAnimationStateController.PlayerState.Walking;
+            playerAnimationStateController.ChangeAnimationState();
             Rotate();
         }
         else
         {
             playerAnimationStateController.currentState = PlayerAnimationStateController.PlayerState.Idle;
+            playerAnimationStateController.ChangeAnimationState();
         }
     }
 

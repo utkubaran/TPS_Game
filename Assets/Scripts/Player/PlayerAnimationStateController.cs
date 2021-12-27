@@ -23,10 +23,37 @@ public class PlayerAnimationStateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckForAnimationState();
+        // CheckForAnimationState();
     }
 
+    /*
     private void CheckForAnimationState()
+    {
+        switch (currentState)
+        {
+            case PlayerState.Idle:
+                animator?.SetBool("isWalking", false);
+                animator?.SetBool("isShooting", false);
+                break;
+            case PlayerState.Walking:
+                animator?.SetBool("isWalking", true);
+                animator?.SetBool("isShooting", false);
+                break;
+            case PlayerState.Shooting:
+                animator?.SetBool("isWalking", false);
+                animator?.SetBool("isShooting", true);
+                break;
+            case PlayerState.Dead:
+                animator?.SetTrigger("isDead");
+                break;
+            default:
+                Debug.Log("NO STATE!");
+                break;
+        }
+    }
+    */
+
+    public void ChangeAnimationState()
     {
         switch (currentState)
         {

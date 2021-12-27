@@ -11,19 +11,18 @@ public class EnemyAnimationStateController : MonoBehaviour
 
     private Animator animator;
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         currentState = EnemyState.Idle;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        CheckForAnimationState();
+        // CheckForAnimationState();
     }
 
+    /*
     private void CheckForAnimationState()
     {
         switch (currentState)
@@ -41,6 +40,36 @@ public class EnemyAnimationStateController : MonoBehaviour
                 animator?.SetBool("isShooting", true);
                 break;
             case EnemyState.Dead:
+                Debug.Log("I'm dead!");
+                // animator?.SetBool("isDead", true);
+                animator?.SetTrigger("isDead");
+                break;
+            default:
+                Debug.Log("NO STATE!");
+                break;
+        }
+    }
+    */
+
+    public void ChangeAnimationState()
+    {
+                switch (currentState)
+        {
+            case EnemyState.Idle:
+                animator?.SetBool("isWalking", false);
+                animator?.SetBool("isShooting", false);
+                break;
+            case EnemyState.Walking:
+                animator?.SetBool("isWalking", true);
+                animator?.SetBool("isShooting", false);
+                break;
+            case EnemyState.Shooting:
+                animator?.SetBool("isWalking", false);
+                animator?.SetBool("isShooting", true);
+                break;
+            case EnemyState.Dead:
+                Debug.Log("I'm dead!");
+                // animator?.SetBool("isDead", true);
                 animator?.SetTrigger("isDead");
                 break;
             default:

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAimController : MonoBehaviour
 {
     private FieldOfView playerFieldOfView;
+    
     private PlayerAnimationStateController playerAnimationStateController;
 
     private Transform targetEnemy;
@@ -35,5 +36,6 @@ public class PlayerAimController : MonoBehaviour
         Vector3 directionToEnemy = targetEnemy.position - this.transform.position;
         transform.rotation = Quaternion.LookRotation(directionToEnemy);
         playerAnimationStateController.currentState = PlayerAnimationStateController.PlayerState.Shooting;
+        playerAnimationStateController.ChangeAnimationState();
     }
 }

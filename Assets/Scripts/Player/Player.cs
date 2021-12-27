@@ -9,10 +9,13 @@ public class Player : MonoBehaviour, IDamageable
 
     private PlayerAnimationStateController playerAnimationStateController;
 
+    private bool isDead;
+
     // Start is called before the first frame update
     void Start()
     {
         playerAnimationStateController = GetComponent<PlayerAnimationStateController>();
+        isDead = false;
     }
 
     void Update()
@@ -27,11 +30,13 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        if (playerHealth <= 0f)
+        if (playerHealth <= 0f && !isDead)
         {
             Debug.Log("Player is dead!");
             playerAnimationStateController.currentState = PlayerAnimationStateController.PlayerState.Dead;
-            Destroy(this.gameObject, 2f);
+            playerAnimationStateController.ChangeAnimationState();
+            GetComponent<PlayerMovementController>().enabled = false;
+            EventManager.OnLevelFail?.Invoke();
         }
     }
 }
