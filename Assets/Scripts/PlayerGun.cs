@@ -5,10 +5,16 @@ using UnityEngine;
 public class PlayerGun : MonoBehaviour
 {
     [SerializeField]
+    float gunDamage = 20f;
+
+    [SerializeField]
     float timeBetweenShots = 1f;
 
     [SerializeField]
     LayerMask targetMask;
+
+    [SerializeField]
+    Transform gunPosition;
 
     private FieldOfView playerFieldOfView;
 
@@ -42,9 +48,10 @@ public class PlayerGun : MonoBehaviour
             isShot = true;
             RaycastHit hit;
 
-            if (Physics.Raycast(this.transform.position, transform.forward, out hit, playerFieldOfView.viewRadius))
+            if (Physics.Raycast(gunPosition.position, gunPosition.forward, out hit, playerFieldOfView.viewRadius))
             {
                 // todo add shooting events
+                hit.transform.GetComponent<IDamageable>()?.GetDamage(gunDamage);
                 Debug.Log(hit.transform.name);
             }
         }

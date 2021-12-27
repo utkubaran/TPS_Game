@@ -14,10 +14,10 @@ public class FieldOfView : MonoBehaviour
     [SerializeField]
     LayerMask targetMask, obstacleMask;
 
+    [Header("Field of View Visualisation")]
     [SerializeField]
     Transform viewVisualisationPoint;
 
-    [Header("Field of View Visualisation")]
     [SerializeField]
     float meshResolution;
 
@@ -116,7 +116,6 @@ public class FieldOfView : MonoBehaviour
                     }
                 }
             }
-
 
             viewPoints.Add(newViewCast.point);
             oldViewCast = newViewCast;

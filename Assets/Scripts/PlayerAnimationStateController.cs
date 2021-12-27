@@ -5,14 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimationStateController : MonoBehaviour
 {
-    [SerializeField]
-    Animator animator;
-
     [HideInInspector]
     public enum PlayerState { Idle, Walking, Shooting, Dead}
 
     [HideInInspector]
     public PlayerState currentState;
+
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -32,16 +31,19 @@ public class PlayerAnimationStateController : MonoBehaviour
         switch (currentState)
         {
             case PlayerState.Idle:
-                Debug.Log("I'm idle!");
+                animator?.SetBool("isWalking", false);
+                animator?.SetBool("isShooting", false);
                 break;
             case PlayerState.Walking:
-                Debug.Log("I'm walking");
+                animator?.SetBool("isWalking", true);
+                animator?.SetBool("isShooting", false);
                 break;
             case PlayerState.Shooting:
-                Debug.Log("I'm shooting!");
+                animator?.SetBool("isWalking", false);
+                animator?.SetBool("isShooting", true);
                 break;
             case PlayerState.Dead:
-                Debug.Log("I'm dead!");
+                animator?.SetTrigger("isDead");
                 break;
             default:
                 Debug.Log("NO STATE!");
