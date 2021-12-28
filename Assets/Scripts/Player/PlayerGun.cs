@@ -16,13 +16,19 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     ParticleSystem muzzleFlash;
 
+    [SerializeField]
+    GameObject impactEffect;
+
+    [SerializeField]
+    float impactForce;
+
     private FieldOfView playerFieldOfView;
 
     private Transform targetEnemy;
 
     private bool isEnemyInSight, isShot;
 
-    private float timeRemainingForNextShot;
+    private float timeRemainingForNextShot = 0f;
     
     // Start is called before the first frame update
     void Start()
@@ -52,6 +58,12 @@ public class PlayerGun : MonoBehaviour
             if (Physics.Raycast(gunPosition.position, gunPosition.forward, out hit, playerFieldOfView.viewRadius))
             {
                 hit.transform.GetComponent<IDamageable>()?.GetDamage(gunDamage);
+                GameObject impactGO =  Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+                if (hit.rigidbody)
+                {
+                    hit.rigidbody.AddForce(hit.normal * impactForce);
+                }
+                Destroy(impactGO, 0.5f);
             }
         }
         
